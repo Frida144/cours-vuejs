@@ -1,5 +1,5 @@
 <template>
-  <div class="max-lg:collapse bg-base-200 lg:mb-48 shadow-sm w-full rounded-md">
+  <header class="header bg-base-200 lg:mb-48 shadow-sm w-full rounded-md">
     <input id="navbar-1-toggle" class="peer hidden" type="checkbox" />
     <label
       for="navbar-1-toggle"
@@ -28,29 +28,25 @@
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
-          <router-link to="/" class="btn btn-ghost">Accueil</router-link>
+          <router-link to="/lessonIntroduction" class="btn btn-ghost justify-start">Accueil</router-link>
            <li>
             <details>
-              <summary>Leçons</summary>
-              <ul class="p-2 bg-base-100 w-40 z-1">
-                <li><router-link to="/lessonIntroduction" class="btn btn-ghost">Introduction</router-link></li>
-                <li><router-link to="/lessonSetup" class="btn btn-ghost">Configuration</router-link></li>
-                <li><router-link to="/lessonSyntax" class="btn btn-ghost">Syntaxe</router-link></li>
-                <li><router-link to="/lessonTextInterpolation" class="btn btn-ghost">Interpolation de texte</router-link></li>
-                <li><router-link to="/lessonAttributeBinding" class="btn btn-ghost">Liaison d'attributs</router-link></li>
-              </ul>
+             <summary>Leçons</summary>
+                <ul class="card w-fit bg-base-100 shadow-xl">
+                <li><router-link to="/lessonSetup" class="btn btn-ghost justify-start">Configuration</router-link></li>
+                <li><router-link to="/lessonSyntax" class="btn btn-ghost justify-start">Syntaxe</router-link></li>
+                <li><router-link to="/lessonTextInterpolation" class="btn btn-ghost justify-start">Interpolation de texte</router-link></li>
+                <li><router-link to="/lessonAttributeBinding" class="btn btn-ghost justify-start">Liaison d'attributs</router-link></li>
+                <li><router-link to="/lessonEventBinding" class="btn btn-ghost justify-start">Liaison d'événements</router-link></li>
+                </ul>
             </details>
           </li>
           <li>
             <details>
               <summary>Tp</summary>
-              <ul class="p-2 bg-base-100 w-40 z-1">
-                <li><router-link to="/about" class="btn btn-ghost">À propos</router-link></li>
-                <li><router-link to="/services" class="btn btn-ghost">Services</router-link></li>
-                <li><router-link to="/contact" class="btn btn-ghost">Contact</router-link></li>
-                <li><router-link to="/Cookie" class="btn btn-ghost">Cookies</router-link></li>
-                <li><router-link to="/Privacy" class="btn btn-ghost">Confidentialité</router-link></li>
-                <li><router-link to="/dataBinding" class="btn btn-ghost">Liaison de données</router-link></li>
+              <ul class="card w-fit bg-base-100 shadow-xl">
+                <li><router-link to="/about" class="btn btn-ghost justify-start">À propos</router-link></li>
+                <li><router-link to="/dataBinding" class="btn btn-ghost justify-start">Liaison de données</router-link></li>
 
               </ul>
             </details>
@@ -58,14 +54,12 @@
           <li>
             <details>
               <summary>Exercices</summary>
-              <ul class="p-2 bg-base-100 w-40 z-1">
-                <router-link to="/exInterpolation" class="btn btn-ghost">Interpolation</router-link>
-                <li><button>Submenu 2</button></li>
+              <ul class="card w-fit bg-base-100 shadow-xl">
+                <li><router-link to="/exInterpolation" class="btn btn-ghost justify-start">Interpolation</router-link></li>
+                <li><router-link to="/exEventBinding" class="btn btn-ghost justify-start">Liaison d'événements</router-link></li>
               </ul>
             </details>
           </li>
-          
-          <li><button>Item 3</button></li>
         </ul>
       </div>
       <div class="navbar-end">
@@ -73,20 +67,7 @@
       </div>
     </div>
 
-    <div class="collapse-content lg:hidden z-1">
-      <ul class="menu">
-        <li><button>Item 1</button></li>
-        <li>
-          <button>Parent</button>
-          <ul>
-            <li><button>Submenu 1</button></li>
-            <li><button>Submenu 2</button></li>
-          </ul>
-        </li>
-        <li><button>Item 3</button></li>
-      </ul>
-    </div>
-  </div>
+  </header>
 </template>
 
 <script setup lang="ts"></script>

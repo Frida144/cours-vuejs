@@ -16,23 +16,6 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../Views/tp/About.vue'),
     },
     {
-        path: '/services',
-        name: 'services',
-        component: () => import('../Views/tp/Service.vue'),
-    },
-    {
-        path: '/contact',
-        component: () => import('../Views/tp/Contact.vue'),
-    },
-    {
-        path: '/cookie',
-        component: () => import('../Views/tp/Cookie.vue'),
-    },
-    {
-        path: '/privacy',
-        component: () => import('../Views/tp/Privacy.vue'),
-    },
-    {
         path: '/exInterpolation',
         component: () => import('../Views/exercices/ExInterpolation.vue'),
     },
@@ -59,6 +42,14 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/dataBinding',
         component: () => import('../Views/tp/Databinding.vue'),
+    },
+    {
+        path: '/lessonEventBinding',
+        component: () => import('../Views/lessons/LessonEventBinding.vue'),
+    },
+    {
+        path: '/exEventBinding',
+        component: () => import('../Views/exercices/ExEventBinding.vue'),
     },
     {
         path: '/:pathMatch(.*)*',
