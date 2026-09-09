@@ -2,9 +2,9 @@
     <div class="flex flex-col items-center justify-center py-2">
     <h1>Exercice Event Binding Mode : Composition</h1>
 
-<button @click="increment" class="btn btn-primary bg-success">+</button>
+<button @click="increment(100)" class="btn btn-primary bg-success">+</button>
 <p>Le nombre: {{count}}</p>
-<button @click="decrement" class="btn btn-primary bg-error">-</button>
+<button @click="decrement(55)" class="btn btn-primary bg-error">-</button>
         
     </div>
 </template>
@@ -13,12 +13,11 @@
 import { ref } from 'vue';
 
 const count = ref(0);
-const increment = () => {
-    count.value += 99;
-  count.value++;
+const increment = (value: number) => {
+    count.value += value;
 };
-const decrement = () => {
-  count.value -= 55;
+const decrement = (value: number) => {
+  count.value -= value;
 };
 
 </script>
