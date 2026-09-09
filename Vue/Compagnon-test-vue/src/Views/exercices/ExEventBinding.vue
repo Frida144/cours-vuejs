@@ -4,7 +4,7 @@
 
 <button @click="increment(100)" class="btn btn-primary bg-success">+</button>
 <p>Le nombre: {{count}}</p>
-<button @click="decrement(55)" class="btn btn-primary bg-error">-</button>
+<button @click.right="decrement(55)" class="btn btn-primary bg-error">-</button>
         
     </div>
 </template>
