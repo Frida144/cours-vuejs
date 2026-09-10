@@ -52,6 +52,18 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../Views/exercices/ExEventBinding.vue'),
     },
     {
+        path: '/lessonTwoWayBinding',
+        component: () => import('../Views/lessons/LessonTwoWayBinding.vue'),
+    },
+    {
+        path: '/lessonDynamicStyling',
+        component: () => import('../Views/lessons/LessonDynamicStyling.vue'),
+    },
+    {
+        path: '/exDynamicStyling',
+        component: () => import('../Views/exercices/ExDynamicStyling.vue'),
+    },
+    {
         path: '/:pathMatch(.*)*',
         component: () => import('../Views/tp/NotFound.vue'),
     },

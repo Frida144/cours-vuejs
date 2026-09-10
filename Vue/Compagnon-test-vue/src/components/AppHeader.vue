@@ -38,6 +38,8 @@
                 <li><router-link to="/lessonTextInterpolation" class="btn btn-ghost justify-start">Interpolation de texte</router-link></li>
                 <li><router-link to="/lessonAttributeBinding" class="btn btn-ghost justify-start">Liaison d'attributs</router-link></li>
                 <li><router-link to="/lessonEventBinding" class="btn btn-ghost justify-start">Liaison d'événements</router-link></li>
+                <li><router-link to="/lessonTwoWayBinding" class="btn btn-ghost justify-start">Liaison bidirectionnelle</router-link></li>
+                <li><router-link to="/lessonDynamicStyling" class="btn btn-ghost justify-start">Style dynamique</router-link></li>
                 </ul>
             </details>
           </li>
@@ -57,6 +59,7 @@
               <ul class="card w-fit bg-base-100 shadow-xl">
                 <li><router-link to="/exInterpolation" class="btn btn-ghost justify-start">Interpolation</router-link></li>
                 <li><router-link to="/exEventBinding" class="btn btn-ghost justify-start">Liaison d'événements</router-link></li>
+                <li><router-link to="/exDynamicStyling" class="btn btn-ghost justify-start">Style dynamique</router-link></li>
               </ul>
             </details>
           </li>
