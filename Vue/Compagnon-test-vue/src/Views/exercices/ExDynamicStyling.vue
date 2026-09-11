@@ -1,44 +1,78 @@
- <template>
-    <h1 class="text-2xl font-bold text-center">Exercice Dynamic Styling Mode : Composition</h1>
-    <div class="flex flex-row gap-10 items-center justify-center py-2">
-         <div>
-            <button :style="dynamicStyle1" class="btn btn-primary" @click="changeColor1">Carte 1 via style</button>
+<template>
+    <div class="container mx-auto p-4 md:p-8 bg-base-200 rounded-box shadow-xl">
+        <h3 class="text-2xl font-bold text-center mb-6">Dynamic Styling (Class)</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 justify-items-center">
+            <div class="col-span-1">
+                <div class="card bg-base-100 shadow-xl cursor-pointer transition-all duration-300 transform hover:scale-105"
+                    @click="selectionCard(1)" v-bind:style="{ backgroundColor: selectCard1 === true ? 'red' : 'aqua' }">
+                    <div class="card-body">
+                        <h5 class="card-title">Carte 1 via style</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-1">
+                <div class="card bg-base-100 shadow-xl cursor-pointer transition-all duration-300 transform hover:scale-105"
+                    @click="selectionCard(2)" :style="{ backgroundColor: selectCard2 ? 'green' : 'violet' }">
+                    <div class="card-body">
+                        <h5 class="card-title">Carte 2 via style</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-1">
+                <div class="card bg-base-100 shadow-xl cursor-pointer transition-all duration-300 transform hover:scale-105"
+                    @click="selectionCard(3)" v-bind:class="{ class1: selectCard3 }">
+                    <div class="card-body">
+                        <h5 class="card-title">Carte 3 via class</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-1">
+                <div class="card bg-base-100 shadow-xl cursor-pointer transition-all duration-300 transform hover:scale-105"
+                    @click="selectionCard(4)" :class="{ 'class2': selectCard4 }">
+                    <div class="card-body">
+                        <h5 class="card-title">Carte 4 via class</h5>
+                    </div>
+                </div>
+            </div>
         </div>
-         <div>
-             <button :style="dynamicStyle2" class="btn btn-primary" @click="changeColor2">Carte 2 via style</button>
-         </div>
     </div>
-     <div class="flex flex-row gap-10 items-center justify-center py-2">
-      <button :class="{'btn-success': isActive, 'btn-secondary': !isActive}" class="btn btn-primary" @click="toggleStatus">Changer le statut via class : Actif</button>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  const dynamicStyle1 = ref({
-    color: 'white',
-    backgroundColor: 'black',
-  });
-  
-  const dynamicStyle2 = ref({
-    color: 'white',
-    backgroundColor: 'pink',
-  });
-  
-  function changeColor1() {
-    dynamicStyle1.value.color = dynamicStyle1.value.color === 'white' ? 'red' : 'white';
-    dynamicStyle1.value.backgroundColor = dynamicStyle1.value.backgroundColor === 'black' ? 'white' : 'black';
-  }
+</template>
 
-  function changeColor2() {
-    dynamicStyle2.value.color = dynamicStyle2.value.color === 'white' ? 'black' : 'white';
-    dynamicStyle2.value.backgroundColor = dynamicStyle2.value.backgroundColor === 'pink' ? 'yellow' : 'pink';
-  }
+<script setup lang='ts'>
+import { ref } from 'vue'
 
+const selectCard1 = ref(false);
+const selectCard2 = ref(false);
+const selectCard3 = ref(false);
+const selectCard4 = ref(false);
 
-  const isActive = ref(true);
-  
-  function toggleStatus() {
-    isActive.value = !isActive.value;
-  }
-  </script>
+function selectionCard(uneCard: number): void {
+    if (uneCard === 1) {
+        selectCard1.value = !selectCard1.value;
+        // selectCard2.value = false;
+    }
+    if (uneCard === 2) {
+        selectCard2.value = !selectCard2.value;
+        // selectCard1.value = false;
+    }
+    if (uneCard === 3) {
+        selectCard3.value = !selectCard3.value;
+    }
+    if (uneCard === 4) {
+        selectCard4.value = !selectCard4.value;
+    }
+}
+</script>
+
+<style scoped lang="css">
+/* Les styles sont gérés par DaisyUI et Tailwind, pas de CSS supplémentaire n'est nécessaire ici. */
+.class1 {
+    background-color: mediumslateblue;
+    font-style: italic;
+}
+.class2 {
+    background-color: chartreuse;
+    font-size: large;
+}
+</style>

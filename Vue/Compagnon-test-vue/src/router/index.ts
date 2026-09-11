@@ -64,6 +64,55 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../Views/exercices/ExDynamicStyling.vue'),
     },
     {
+        path: '/lessonConditionalRendering',
+        component: () => import('../Views/lessons/LessonConditionalRendering.vue'),
+    },
+    {
+        path: '/exConditionalRendering',
+        component: () => import('../Views/exercices/ExConditionalRendering.vue'),
+    },
+    {
+        path: '/lessonListRendering',
+        component: () => import('../Views/lessons/LessonListRendering.vue'),
+    },
+    {
+        path: '/exListRendering',
+        component: () => import('../Views/exercices/ExListRendering.vue'),
+    },
+    {
+        path: '/lessonLifecycle',
+        component: () => import('../Views/lessons/LessonLifecycle.vue'),
+    },
+    {
+        path: '/exLifecycle',
+        component: () => import('../Views/exercices/ExLifecycle.vue'),
+    },
+    {
+        path: '/exCrashTestComputer',
+        component: () => import('../Views/exercices/ExCrashTestComputer.vue'),
+    },
+    {
+        path: '/reactivite',
+        component: () => import('../Views/tp/Reactivite.vue'),
+    },
+    {
+        path: '/register',
+        component: () => import('../Views/auth/Register.vue'),
+    },
+    {
+        path: '/profiles',
+        component: () => import('../Views/auth/ProfilesListView.vue'),
+    },
+    {
+        path: '/profiles/:id',
+        name: 'profile-detail',
+        component: () => import('../Views/auth/ProfileDetailView.vue'),
+    },
+    {
+        path: '/productCatalog',
+        component: () => import('../Views/tp/ProductCatalog.vue'),
+    },
+    {
         path: '/:pathMatch(.*)*',
         component: () => import('../Views/tp/NotFound.vue'),
     },
