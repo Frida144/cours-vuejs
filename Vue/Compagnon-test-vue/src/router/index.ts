@@ -113,6 +113,30 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../Views/tp/ProductCatalog.vue'),
     },
     {
+        path: '/lessonComputedProperties',
+        component: () => import('../Views/lessons/LessonComputedProperties.vue'),
+    },
+    {
+        path: '/lessonProps',
+        component: () => import('../Views/lessons/LessonProps.vue'),
+    },
+    {
+        path: '/lessonWatchers',
+        component: () => import('../Views/lessons/LessonWatchers.vue'),
+    },
+    {
+        path: '/messagecard',
+        component: () => import('../components/MessageCard.vue'),
+    },
+    {
+        path: '/exProps',
+        component: () => import('../Views/exercices/ExProps.vue'),
+    },
+    {
+        path: '/lessonEmit',
+        component: () => import('../Views/lessons/LessonEmit.vue'),
+    },
+    {
         path: '/:pathMatch(.*)*',
         component: () => import('../Views/tp/NotFound.vue'),
     },

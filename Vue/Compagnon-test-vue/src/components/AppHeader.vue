@@ -33,7 +33,7 @@
       <!-- menu desktop -->
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
-          <router-link to="/lessonIntroduction" class="btn btn-ghost justify-start">Accueil</router-link>
+          <li><router-link to="/lessonIntroduction" class="btn btn-ghost justify-start">Accueil</router-link></li>
           <li>
             <details>
               <summary>Leçons</summary>
@@ -48,6 +48,10 @@
                 <li><router-link to="/lessonConditionalRendering" class="btn btn-ghost justify-start">Rendu conditionnel</router-link></li>
                 <li><router-link to="/lessonLifecycle" class="btn btn-ghost justify-start">Cycle de vie</router-link></li>
                 <li><router-link to="/lessonListRendering" class="btn btn-ghost justify-start">Rendu de listes</router-link></li>
+                <li><router-link to="/lessonComputedProperties" class="btn btn-ghost justify-start">Propriétés calculées</router-link></li>
+                <li><router-link to="/lessonWatchers" class="btn btn-ghost justify-start">Observateurs</router-link></li>
+                <li><router-link to="/lessonProps" class="btn btn-ghost justify-start">Props</router-link></li>
+                <li><router-link to="/lessonEmit" class="btn btn-ghost justify-start">Emit</router-link></li>
               </ul>
             </details>
           </li>
@@ -73,6 +77,7 @@
                 <li><router-link to="/exCrashTestComputer" class="btn btn-ghost justify-start">Test de crash</router-link></li>
                 <li><router-link to="/exListRendering" class="btn btn-ghost justify-start">Rendu de listes</router-link></li>
                 <li><router-link to="/exLifecycle" class="btn btn-ghost justify-start">Cycle de vie</router-link></li>
+                <li><router-link to="/exProps" class="btn btn-ghost justify-start">Props</router-link></li>
               </ul>
             </details>
           </li>
@@ -82,6 +87,8 @@
               <ul class="card z-50 w-fit bg-base-100 shadow-xl">
                 <li><router-link to="/register" class="btn btn-ghost justify-start">Inscription</router-link></li>
                 <li><router-link to="/profiles" class="btn btn-ghost justify-start">Profils</router-link></li>
+                <li><router-link to="/messagecard" class="btn btn-ghost justify-start">Message Card</router-link></li>
+
               </ul>
             </details>
           </li>
@@ -116,6 +123,10 @@
               <li><router-link to="/lessonConditionalRendering">Rendu conditionnel</router-link></li>
               <li><router-link to="/lessonLifecycle">Cycle de vie</router-link></li>
               <li><router-link to="/lessonListRendering">Rendu de listes</router-link></li>
+              <li><router-link to="/lessonComputedProperties">Propriétés calculées</router-link></li>
+              <li><router-link to="/lessonWatchers">Observateurs</router-link></li>
+              <li><router-link to="/lessonProps">Props</router-link></li>
+              <li><router-link to="/lessonEmit">Emit</router-link></li>
             </ul>
           </details>
         </li>
@@ -143,6 +154,7 @@
               <li><router-link to="/exCrashTestComputer">Test de crash</router-link></li>
               <li><router-link to="/exListRendering">Rendu de listes</router-link></li>
               <li><router-link to="/exLifecycle">Cycle de vie</router-link></li>
+              <li><router-link to="/exProps">Props</router-link></li>
             </ul>
           </details>
         </li>
@@ -153,6 +165,7 @@
             <ul>
               <li><router-link to="/register">Inscription</router-link></li>
               <li><router-link to="/profiles">Profils</router-link></li>
+              <li><router-link to="/messagecard">Message Card</router-link></li>
             </ul>
           </details>
         </li>

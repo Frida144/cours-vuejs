@@ -1,168 +1,80 @@
 <template>
-    <div class="min-h-screen flex items-center justify-center p-6">
+    <div class="container mx-auto p-4 md:p-8 max-w-xl">
+        <!-- Fiche du profil si l'utilisateur existe -->
+        <div v-if="user" class="card bg-base-100 shadow-xl p-6 border border-base-200 text-center">
+            <figure class="mb-4">
+                <img :src="user.avatar" :alt="user.name" class="rounded-full w-32 h-32 object-cover mx-auto" />
+            </figure>
 
-        <div
-            v-if="profile"
-            class="card w-full max-w-lg bg-base-300 shadow-xl"
-        >
-            <div class="card-body items-center text-center">
+            <h1 class="text-3xl font-bold">{{ user.name }}</h1>
+            <p class="text-primary font-semibold mt-1">{{ user.role }}</p>
 
-                <!-- Avatar -->
-                <div class="avatar mb-4">
-                    <div class="w-32 rounded-full">
-                        <img
-                            :src="profile.avatar"
-                            :alt="profile.name"
-                        />
-                    </div>
-                </div>
+            <div class="divider"></div>
 
-                <!-- Nom -->
-                <h1 class="text-3xl font-bold">
-                    {{ profile.name }}
-                </h1>
+            <div class="text-left space-y-2 text-sm opacity-80">
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <p><strong>Bio :</strong> {{ user.bio }}</p>
+            </div>
 
-                <!-- Rôle -->
-                <div class="badge badge-secondary mt-2">
-                    {{ profile.role }}
-                </div>
-
-                <!-- Informations -->
-                <div class="w-full mt-6 text-left space-y-4">
-
-                    <!-- Email -->
-                    <div>
-                        <p class="font-bold text-lg">
-                            Adresse email
-                        </p>
-
-                        <p class="text-base-content/70">
-                            {{ profile.email }}
-                        </p>
-                    </div>
-
-                    <!-- Rôle -->
-                    <div>
-                        <p class="font-bold text-lg">
-                            Rôle
-                        </p>
-
-                        <p class="text-base-content/70">
-                            {{ profile.role }}
-                        </p>
-                    </div>
-
-                    <!-- Biographie -->
-                    <div>
-                        <p class="font-bold text-lg">
-                            Biographie
-                        </p>
-
-                        <p class="text-base-content/70">
-                            {{ profile.bio }}
-                        </p>
-                    </div>
-
-                </div>
-
-                <!-- Retour -->
-                <div class="card-actions mt-6">
-                    <RouterLink
-                        to="/profiles"
-                        class="btn btn-primary"
-                    >
-                        Retour à la liste
-                    </RouterLink>
-                </div>
-
+            <div class="mt-6">
+                <button @click="goBack" class="btn btn-outline btn-sm">
+                    ← Retour à la liste
+                </button>
             </div>
         </div>
 
-        <!-- Profil introuvable -->
-        <div
-            v-else
-            class="alert alert-error max-w-lg"
-        >
-            <div>
-                <h2 class="font-bold">
-                    Profil introuvable
-                </h2>
-
-                <p>
-                    Aucun profil ne correspond à l'identifiant
-                    {{ userId }}.
-                </p>
-            </div>
-
-            <RouterLink
-                to="/profiles"
-                class="btn btn-sm"
-            >
-                Retour
+        <!-- Message si aucun profil ne correspond à l'ID de l'URL -->
+        <div v-else class="text-center py-12 bg-base-100 rounded-xl shadow-md border border-base-200 p-6">
+            <h2 class="text-2xl font-bold text-error">Profil introuvable !</h2>
+            <p class="opacity-75 mt-2">Aucun utilisateur ne correspond à l'identifiant <strong>{{ currentId }}</strong>.
+            </p>
+            <RouterLink to="/profiles" class="btn btn-primary mt-4 btn-sm">
+                Retour à l'annuaire
             </RouterLink>
         </div>
-
     </div>
 </template>
 
-
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+// Interfaces pour le typage
+interface UserDetail {
+    id: number;
+    name: string;
+    role: string;
+    email: string;
+    bio: string;
+    avatar: string;
+}
+
+// Composables de Vue Router
+const route = useRoute();
+const router = useRouter();
 
 
-// Récupération de la route
-const route = useRoute()
 
-// Récupération de l'id présent dans l'URL
-const userId = route.params.id
+// Récupération de l'ID depuis l'URL (route.params.id)
+const currentId = route.params.id;
 
+// Données fictives
+const mockUsers: UserDetail[] = [
+    { id: 1, name: 'Alice Martin', role: 'Développeuse Frontend', email: 'alice@example.com', bio: 'Passionnée de Vue.js et de design system.', avatar: 'https://i.pravatar.cc/150?img=1' },
+    { id: 2, name: 'Bob Dupont', role: 'UX Designer', email: 'bob@example.com', bio: 'Créateur d’expériences utilisateurs fluides et accessibles.', avatar: 'https://i.pravatar.cc/150?img=3' },
+    { id: 3, name: 'Charlie Cassagne', role: 'DevOps', email: 'charlie@example.com', bio: 'Spécialiste CI/CD, Docker et Kubernetes.', avatar: 'https://i.pravatar.cc/150?img=8' }
+];
 
-// Tableau des profils
-const profiles = ref([
-    {
-        id: 1,
-        name: 'Alice Martin',
-        role: 'Developpeuse Frontend',
-        avatar: 'https://i.pravatar.cc/150?img=47',
-        email: 'alice.martin@email.com',
-        bio: 'Alice est développeuse frontend spécialisée dans Vue.js et les interfaces modernes.'
-    },
-    {
-        id: 2,
-        name: 'Bob Dupont',
-        role: 'UX Designer',
-        avatar: 'https://i.pravatar.cc/150?img=12',
-        email: 'bob.dupont@email.com',
-        bio: 'Bob est UX Designer. Il travaille sur l’expérience utilisateur et la conception d’interfaces intuitives.'
-    },
-    {
-        id: 3,
-        name: 'Charlie Cassagne',
-        role: 'DevOps',
-        avatar: 'https://i.pravatar.cc/150?img=13',
-        email: 'charlie.cassagne@email.com',
-        bio: 'Charlie est ingénieur DevOps et s’occupe de l’automatisation, du déploiement et de l’infrastructure.'
-    },
-    {
-        id: 4,
-        name: 'David Bernard',
-        role: 'Backend Developer',
-        avatar: 'https://i.pravatar.cc/150?img=11',
-        email: 'david.bernard@email.com',
-        bio: 'David développe des applications backend robustes et des API performantes.'
-    }
-])
+const user = ref<UserDetail | null>(null);
 
-
-// Profil sélectionné
-const profile = ref<typeof profiles.value[0] | undefined>()
-
-
-// Recherche du profil lorsque le composant est monté
 onMounted(() => {
-    profile.value = profiles.value.find(
-        (profile) => profile.id === Number(userId)
-    )
-})
+    // Conversion du paramètre de l'URL (string) en nombre pour la recherche
+    const numericId = Number(currentId);
+    user.value = mockUsers.find(u => u.id === numericId) || null;
+});
+
+// Navigation programmatique pour le bouton retour
+function goBack(): void {
+    router.push({ name: 'profiles' });
+}
 </script>

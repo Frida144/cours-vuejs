@@ -1,341 +1,233 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-base-200 p-6">
-    <div class="card w-full max-w-lg bg-base-100 shadow-xl">
-      <div class="card-body">
-        <h1 class="card-title text-2xl mb-4">
-          Créer un compte
-        </h1>
+    <div class="container mx-auto p-4 md:p-8 max-w-xl">
+        <div class="card bg-base-100 shadow-xl p-6 border border-base-300">
+            <h2 class="card-title text-2xl font-bold mb-6 text-primary">Créer un compte</h2>
 
-        <form @submit.prevent="handleSubmit" class="space-y-4">
+            <form @submit.prevent="handleSubmit" class="space-y-4">
+                
+                <!-- Nom d'utilisateur (avec Anti-XSS) -->
+                <div class="form-control">
+                    <label class="label" for="username">
+                        <span class="label-text font-semibold">Nom d'utilisateur</span>
+                    </label>
+                    <input 
+                        id="username"
+                        v-model="username"
+                        type="text" 
+                        placeholder="Ex: jdupont"
+                        class="input input-bordered w-full"
+                        :class="{ 'input-error': username && !isUsernameValid, 'input-success': isUsernameValid }"
+                    />
+                    <label class="label" v-if="username && !isUsernameValid">
+                        <span class="label-text-alt text-error">3 caractères minimum (les balises HTML sont nettoyées)</span>
+                    </label>
+                </div>
 
-          <!-- Username -->
-          <div class="form-control">
-            <label class="label" for="username">
-              <span class="label-text">Nom d'utilisateur</span>
-            </label>
+                <!-- Email avec Regex -->
+                <div class="form-control">
+                    <label class="label" for="email">
+                        <span class="label-text font-semibold">Adresse Email</span>
+                    </label>
+                    <input 
+                        id="email"
+                        v-model="email"
+                        type="email" 
+                        placeholder="john@example.com"
+                        class="input input-bordered w-full"
+                        :class="{ 'input-error': email && !isEmailValid, 'input-success': isEmailValid }"
+                    />
+                    <label class="label" v-if="email && !isEmailValid">
+                        <span class="label-text-alt text-error">Veuillez entrer un email valide</span>
+                    </label>
+                </div>
 
-            <input
-              id="username"
-              v-model="username"
-              type="text"
-              placeholder="Votre nom d'utilisateur"
-              class="input input-bordered w-full"
-              :class="{ 'input-error': username.length > 0 && !usernameValid }"
-              autocomplete="username"
-            />
+                <!-- Mot de passe CNIL -->
+                <div class="form-control">
+                    <label class="label" for="password">
+                        <span class="label-text font-semibold">Mot de passe</span>
+                    </label>
+                    <input 
+                        id="password"
+                        v-model="password"
+                        type="password" 
+                        placeholder="••••••••••••"
+                        class="input input-bordered w-full"
+                        :class="{ 'input-success': isPasswordValid }"
+                    />
+                    
+                    <!-- Feedback visuel CNIL -->
+                    <div class="mt-2 space-y-1">
+                        <div class="flex justify-between text-xs">
+                            <span>Force du mot de passe (Recommandation CNIL)</span>
+                            <span class="font-bold">{{ passwordScore }}/5</span>
+                        </div>
+                        <progress 
+                            class="progress w-full transition-all duration-300" 
+                            :class="passwordProgressColor" 
+                            :value="passwordScore" 
+                            max="5"
+                        ></progress>
+                        <ul class="text-xs space-y-1 mt-2 text-base-content opacity-70">
+                            <li :class="{ 'text-success font-bold': passwordCriteria.minLength }">✓ Au moins 12 caractères</li>
+                            <li :class="{ 'text-success font-bold': passwordCriteria.hasUpper }">✓ Au moins une majuscule</li>
+                            <li :class="{ 'text-success font-bold': passwordCriteria.hasLower }">✓ Au moins une minuscule</li>
+                            <li :class="{ 'text-success font-bold': passwordCriteria.hasNumber }">✓ Au moins un chiffre</li>
+                            <li :class="{ 'text-success font-bold': passwordCriteria.hasSpecial }">✓ Au moins un caractère spécial (!@#$%...)</li>
+                        </ul>
+                    </div>
+                </div>
 
-            <label class="label">
-              <span
-                v-if="username.length > 0 && !usernameValid"
-                class="label-text-alt text-error"
-              >
-                Le nom d'utilisateur doit comporter au moins 3 caractères.
-              </span>
-            </label>
+                <!-- Confirmation Mot de passe -->
+                <div class="form-control">
+                    <label class="label" for="confirmPassword">
+                        <span class="label-text font-semibold">Confirmer le mot de passe</span>
+                    </label>
+                    <input 
+                        id="confirmPassword"
+                        v-model="confirmPassword"
+                        type="password" 
+                        placeholder="••••••••••••"
+                        class="input input-bordered w-full"
+                        :class="{ 'input-error': confirmPassword && !isPasswordMatch, 'input-success': isPasswordMatch && confirmPassword }"
+                    />
+                    <label class="label" v-if="confirmPassword && !isPasswordMatch">
+                        <span class="label-text-alt text-error">Les mots de passe ne correspondent pas</span>
+                    </label>
+                </div>
 
-            <div v-if="adminWarning" class="alert alert-warning mt-2">
-              <span>
-                ⚠️ Le mot-clé « admin » est réservé et déconseillé.
-              </span>
-            </div>
-          </div>
+                <!-- Conditions -->
+                <div class="form-control">
+                    <label class="label cursor-pointer justify-start gap-3">
+                        <input type="checkbox" v-model="acceptTerms" class="checkbox checkbox-primary" />
+                        <span class="label-text">J'accepte les conditions générales</span>
+                    </label>
+                </div>
 
-          <!-- Email -->
-          <div class="form-control">
-            <label class="label" for="email">
-              <span class="label-text">Adresse email</span>
-            </label>
+                <!-- Toast Alerte Sécurité (Watcher) -->
+                <div v-if="securityAlert" class="alert alert-warning shadow-lg text-sm">
+                    <span>⚠️ Attention : Le mot-clé "{{ securityAlert }}" est réservé par le système.</span>
+                </div>
 
-            <input
-              id="email"
-              v-model="email"
-              type="email"
-              placeholder="exemple@email.com"
-              class="input input-bordered w-full"
-              :class="{ 'input-error': email.length > 0 && !emailValid }"
-              autocomplete="email"
-            />
-
-            <label class="label">
-              <span
-                v-if="email.length > 0 && !emailValid"
-                class="label-text-alt text-error"
-              >
-                Veuillez saisir une adresse email valide.
-              </span>
-            </label>
-
-            <div v-if="adminWarning" class="alert alert-warning mt-2">
-              <span>
-                ⚠️ L'adresse email contient le mot-clé réservé « admin ».
-              </span>
-            </div>
-          </div>
-
-          <!-- Password -->
-          <div class="form-control">
-            <label class="label" for="password">
-              <span class="label-text">Mot de passe</span>
-              <span class="label-text-alt">
-                {{ passwordScore }}/5
-              </span>
-            </label>
-
-            <input
-              id="password"
-              v-model="password"
-              type="password"
-              placeholder="Votre mot de passe"
-              class="input input-bordered w-full"
-              :class="{
-                'input-error': password.length > 0 && passwordScore < 5,
-                'input-success': passwordScore === 5
-              }"
-              autocomplete="new-password"
-            />
-
-            <!-- Barre de progression DaisyUI -->
-            <progress
-              class="progress w-full mt-3"
-              :class="passwordProgressClass"
-              :value="passwordScore"
-              max="5"
-            ></progress>
-
-            <!-- Critères -->
-            <div class="mt-3 space-y-1 text-sm">
-              <p :class="passwordCriteria.length ? 'text-success' : 'text-error'">
-                {{ passwordCriteria.length ? '✓' : '✗' }}
-                Au moins 12 caractères
-              </p>
-
-              <p :class="passwordCriteria.uppercase ? 'text-success' : 'text-error'">
-                {{ passwordCriteria.uppercase ? '✓' : '✗' }}
-                Une lettre majuscule
-              </p>
-
-              <p :class="passwordCriteria.lowercase ? 'text-success' : 'text-error'">
-                {{ passwordCriteria.lowercase ? '✓' : '✗' }}
-                Une lettre minuscule
-              </p>
-
-              <p :class="passwordCriteria.number ? 'text-success' : 'text-error'">
-                {{ passwordCriteria.number ? '✓' : '✗' }}
-                Un chiffre
-              </p>
-
-              <p :class="passwordCriteria.special ? 'text-success' : 'text-error'">
-                {{ passwordCriteria.special ? '✓' : '✗' }}
-                Un caractère spécial
-              </p>
-            </div>
-          </div>
-
-          <!-- Confirm password -->
-          <div class="form-control">
-            <label class="label" for="confirmPassword">
-              <span class="label-text">Confirmer le mot de passe</span>
-            </label>
-
-            <input
-              id="confirmPassword"
-              v-model="confirmPassword"
-              type="password"
-              placeholder="Répétez votre mot de passe"
-              class="input input-bordered w-full"
-              :class="{
-                'input-error':
-                  confirmPassword.length > 0 && !passwordsMatch,
-                'input-success':
-                  confirmPassword.length > 0 && passwordsMatch
-              }"
-              autocomplete="new-password"
-            />
-
-            <label class="label">
-              <span
-                v-if="confirmPassword.length > 0 && !passwordsMatch"
-                class="label-text-alt text-error"
-              >
-                Les mots de passe ne correspondent pas.
-              </span>
-
-              <span
-                v-else-if="passwordsMatch"
-                class="label-text-alt text-success"
-              >
-                Les mots de passe correspondent.
-              </span>
-            </label>
-          </div>
-
-          <!-- Terms -->
-          <div class="form-control">
-            <label class="label cursor-pointer justify-start gap-3">
-              <input
-                v-model="termsAccepted"
-                type="checkbox"
-                class="checkbox checkbox-primary"
-              />
-
-              <span class="label-text">
-                J'accepte les conditions d'utilisation.
-              </span>
-            </label>
-          </div>
-
-          <!-- Global error -->
-          <div
-            v-if="submitted && !formValid"
-            class="alert alert-error"
-          >
-            <span>
-              Veuillez corriger les erreurs avant de continuer.
-            </span>
-          </div>
-
-          <!-- Submit -->
-          <button
-            type="submit"
-            class="btn btn-primary w-full"
-            :disabled="!formValid"
-          >
-            Créer mon compte
-          </button>
-        </form>
-      </div>
+                <!-- Bouton Valider -->
+                <button 
+                    type="submit" 
+                    class="btn btn-primary w-full mt-4" 
+                    :disabled="!isFormValid"
+                >
+                    S'inscrire
+                </button>
+            </form>
+        </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue';
 
-const username = ref('')
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-const termsAccepted = ref(false)
+// --- États réactifs du formulaire ---
+const username = ref<string>('');
+const email = ref<string>('');
+const password = ref<string>('');
+const confirmPassword = ref<string>('');
+const acceptTerms = ref<boolean>(false);
+const securityAlert = ref<string | null>(null);
 
-const submitted = ref(false)
-const adminWarning = ref(false)
+// --- expressions régulières (RegEx) ---
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const SPECIAL_CHAR_REGEX = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-// Anti-XSS username
+// --- Sanitisation Anti-XSS sur le pseudo ---
+// Remplace les caractères dangereux par leurs entités HTML
+const sanitizeInput = (input: string): string => {
+    return input
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;');
+};
 
-function sanitizeInput(value) {
-  return value
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/&/g, '&amp;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-}
+// --- Computed Properties pour validations simples ---
+const isUsernameValid = computed<boolean>(() => {
+    return username.value.trim().length >= 3;
+});
 
-watch(username, (newValue) => {
-  const sanitized = sanitizeInput(newValue)
+const isEmailValid = computed<boolean>(() => {
+    return EMAIL_REGEX.test(email.value);
+});
 
-  if (newValue !== sanitized) {
-    username.value = sanitized
-  }
-})
+// --- Computed Property pour la conformité CNIL du mot de passe ---
+const passwordCriteria = computed(() => {
+    const val = password.value;
+    return {
+        minLength: val.length >= 12,
+        hasUpper: /[A-Z]/.test(val),
+        hasLower: /[a-z]/.test(val),
+        hasNumber: /[0-9]/.test(val),
+        hasSpecial: SPECIAL_CHAR_REGEX.test(val)
+    };
+});
 
-// Validation username
+const passwordScore = computed<number>(() => {
+    const c = passwordCriteria.value;
+    return [c.minLength, c.hasUpper, c.hasLower, c.hasNumber, c.hasSpecial].filter(Boolean).length;
+});
 
-const usernameValid = computed(() => {
-  return username.value.trim().length >= 3
-})
+const isPasswordValid = computed<boolean>(() => {
+    return passwordScore.value === 5;
+});
 
-// Validation email
+const passwordProgressColor = computed<string>(() => {
+    if (passwordScore.value <= 2) return 'progress-error';
+    if (passwordScore.value <= 4) return 'progress-warning';
+    return 'progress-success';
+});
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const isPasswordMatch = computed<boolean>(() => {
+    return password.value.length > 0 && password.value === confirmPassword.value;
+});
 
-const emailValid = computed(() => {
-  return emailRegex.test(email.value)
-})
+// Validation globale du formulaire
+const isFormValid = computed<boolean>(() => {
+    return (
+        isUsernameValid.value &&
+        isEmailValid.value &&
+        isPasswordValid.value &&
+        isPasswordMatch.value &&
+        acceptTerms.value
+    );
+});
 
-// Critères mot de passe
+// --- Watchers ---
 
-const passwordCriteria = computed(() => ({
-  length: password.value.length >= 12,
-  uppercase: /[A-Z]/.test(password.value),
-  lowercase: /[a-z]/.test(password.value),
-  number: /[0-9]/.test(password.value),
-  special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/.test(password.value)
-}))
+// 1. Sanitisation en temps réel du nom d'utilisateur
+watch(username, (newVal) => {
+    const sanitized = sanitizeInput(newVal);
+    if (sanitized !== newVal) {
+        username.value = sanitized;
+    }
+});
 
-// Score password : 0 à 5
+// 2. Surveillance du mot-clé réservé "admin"
+watch([username, email], ([newUsername, newEmail]) => {
+    if (newUsername.toLowerCase().includes('admin') || newEmail.toLowerCase().includes('admin')) {
+        securityAlert.value = 'admin';
+    } else {
+        securityAlert.value = null;
+    }
+});
 
-const passwordScore = computed(() => {
-  return Object.values(passwordCriteria.value)
-    .filter(Boolean)
-    .length
-})
+// --- Méthodes ---
+function handleSubmit(): void {
+    if (!isFormValid.value) return;
 
-// Couleur progress DaisyUI
-
-const passwordProgressClass = computed(() => {
-  if (passwordScore.value <= 2) {
-    return 'progress-error'
-  }
-
-  if (passwordScore.value <= 4) {
-    return 'progress-warning'
-  }
-
-  return 'progress-success'
-})
-
-// Confirmation password
-
-const passwordsMatch = computed(() => {
-  return (
-    password.value.length > 0 &&
-    password.value === confirmPassword.value
-  )
-})
-
-// Surveillance de sécurité
-
-watch(
-  [username, email],
-  ([newUsername, newEmail]) => {
-    const usernameContainsAdmin =
-      newUsername.toLowerCase().includes('admin')
-
-    const emailContainsAdmin =
-      newEmail.toLowerCase().includes('admin')
-
-    adminWarning.value =
-      usernameContainsAdmin || emailContainsAdmin
-  }
-)
-
-// Validation globale
-
-const formValid = computed(() => {
-  return (
-    usernameValid.value &&
-    emailValid.value &&
-    passwordScore.value === 5 &&
-    passwordsMatch.value &&
-    termsAccepted.value
-  )
-})
-
-// Soumission
-
-function handleSubmit() {
-  submitted.value = true
-
-  if (!formValid.value) {
-    return
-  }
-
-  // Ici : appel API / création du compte
-  console.log('Formulaire valide', {
-    username: username.value,
-    email: email.value,
-    password: password.value
-  })
+    alert(`Inscription réussie pour ${username.value} (${email.value}) !`);
+    
+    // Réinitialisation
+    username.value = '';
+    email.value = '';
+    password.value = '';
+    confirmPassword.value = '';
+    acceptTerms.value = false;
 }
 </script>
