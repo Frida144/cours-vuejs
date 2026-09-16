@@ -137,6 +137,10 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../Views/lessons/LessonEmit.vue'),
     },
     {
+        path: '/exEmit',
+        component: () => import('../Views/exercices/ExEmit.vue'),
+    },
+    {
         path: '/:pathMatch(.*)*',
         component: () => import('../Views/tp/NotFound.vue'),
     },

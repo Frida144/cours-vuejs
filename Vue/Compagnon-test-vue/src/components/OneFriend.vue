@@ -1,83 +1,109 @@
 <template>
-    <div class="card w-full max-w-md bg-blue-400 shadow-xl my-4 text-white mx-auto">
+    <div class="card w-full max-w-md bg-violet-200 shadow-xl my-4">
+        <h2 class="card-title mx-2">{{ unAmiName }}</h2>
+        <!-- <h2 class="card-title">Composant OneFriend.vue</h2> -->
         <div class="card-body">
-            <h2 class="card-title text-xl font-bold justify-between">
-                👤 {{ friend.name }}
-                <span class="badge" :class="friend.premium ? 'badge-warning' : 'badge-ghost'">
-                    {{ friend.premium ? 'Premium' : 'Standard' }}
-                </span>
-            </h2>
-
-            <button class="btn btn-sm btn-outline mt-2" @click="toggleDetails">
-                {{ showDetails ? 'Cacher les détails' : 'Afficher les détails' }}
-            </button>
-
-            <div v-if="showDetails" class="space-y-2 mt-2">
-                <p class="flex items-center gap-2">
-                    <span class="badge badge-outline">ID</span>
-                    {{ friend.id }}
-                </p>
-
-                <p class="flex items-center gap-2">
-                    <span class="badge badge-outline">📞</span>
-                    {{ friend.phone }}
-                </p>
-
-                <p class="flex items-center gap-2">
-                    <span class="badge badge-outline">📧</span>
-                    {{ friend.email }}
-                </p>
+            <h3 class="card-title text-primary text-sm">
+                👤 {{ unAmiName }} - ami : {{ premiumData ? 'En Or ..🏆' : 'En Plomb' }}
+                <div class="badge" :class="premiumData ? 'badge-success' : 'badge-ghost'">
+                    {{ premiumData ? 'Premium' : 'Standard' }}
+                </div>
+            </h3>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <!-- <button @click="modifPremium" type="button" class="btn btn-xs btn-primary">Modif Props Premium</button> -->
+                <button @click="updatePremium" type="button" class="btn btn-xs btn-secondary ">Update Premium</button>
+                <button @click="afficherDetails" type="button" class="btn btn-xs btn-info mx-2">{{ detailsVisibles ? 'Masquer' : 'Afficher' }} Details</button>
+                <button @click="emit('delete-friend',unAmiId)" type="button" class="btn btn-xs btn-error">🗑 Supprimer</button>
             </div>
 
-            <button class="btn btn-sm btn-primary mt-4" @click="updatePremium(friend.id)">
-                Mettre à jour le statut Premium
-            </button>
+            <div v-if="detailsVisibles" id="details-friend" class="space-y-2 text-base-content">
+                <p class="flex items-center gap-2">
+                    <span class="badge badge-outline badge-primary">ID</span>
+                    {{ unAmiId }}
+                </p>
+
+                <p class="flex items-center gap-2">
+                    <span class="badge badge-outline badge-secondary">📞</span>
+                    {{ unAmiPhone }}
+                </p>
+
+                <p class="flex items-center gap-2">
+                    <span class="badge badge-outline badge-accent">📧</span>
+                    {{ unAmiMail }}
+                </p>
+            </div>
         </div>
     </div>
 </template>
 
-Explication
 
-showDetails est une ref booléenne, initialisée à false : les détails sont cachés par défaut.
-toggleDetails inverse sa valeur à chaque clic (!showDetails.value).
-Le bouton appelle cette méthode via @click.
-Le v-if="showDetails" sur le bloc contenant id/téléphone/email fait que ce bloc n'est même pas rendu dans le DOM tant que showDetails vaut false (contrairement à v-show qui le cacherait juste en CSS).
+<script setup lang="js">
+import { defineProps, defineEmits, ref } from 'vue'
 
-Une fois cette partie fonctionnelle, dis-moi quand tu veux passer à la Phase 2 (defineEmits + bouton Update Premium).
+const props = defineProps({
+    unAmiId: {
+        type: String,
+        required: true,
+    },
+    unAmiName: {
+        type: String,
+        required: true,
+    },
+    unAmiPhone: {
+        type: String,
+        required: true,
+    },
+    unAmiMail: {
+        type: String,
+        required: true,
+    },
+    unAmiPremium: {
+        type: Boolean,
+        required: false,
+        default: true,
+    },
+})
 
-oui vas y
+// const emit = defineEmits(['mon-event-premium-update','deleteFriend'])
+const emit = defineEmits({
+    'mon-event-premium-update': (id) => {
+    if (id) {
+      return true;
+    } else {
+      console.warn('Alerte Maximale : C\'est la catastrophe !!!!!!');
+      console.error('ON A PAS DE ID Dans le event mon-event-premium-update');
+      return false;
+    }
+  },
+    'delete-friend': (id) => {
+    if (id) {
+      return true;
+    } else {
+      console.warn('C\'est la catastrophe !!!!!!');
+      console.error('ON A PAS DE ID Dans le event deleteFriend');
+      return false;
+    }
+  }
+})
 
-Moving into the next phase of the task.
+//Attention INTERDIT de modifier une props directement
+// On utilise une ref pour stocker la props
+// Et ensuite on pourra faire des modif sur la ref qui contient la props
+const premiumData = ref(props.unAmiPremium)
+const detailsVisibles = ref(false);
 
-Solution
+// const modifPremium = () => {
+//     premiumData.value = !premiumData.value
+// }
 
-vue
-<script setup lang="ts">
-import { ref } from 'vue';
-
-export interface Friend {
-    id: string;
-    name: string;
-    phone: string;
-    email: string;
-    premium: boolean;
+function afficherDetails() {
+  detailsVisibles.value = !detailsVisibles.value;
 }
 
-defineProps<{
-    friend: Friend;
-}>();
-
-const emit = defineEmits<{
-    'mon-event-premium-update': [id: string];
-}>();
-
-const showDetails = ref(false);
-
-function toggleDetails() {
-    showDetails.value = !showDetails.value;
-}
-
-function updatePremium(id: string) {
-    emit('mon-event-premium-update', id);
+function updatePremium() {
+  premiumData.value = !premiumData.value;
+  // emit('mon-event-premium');
+  emit('mon-event-premium-update',props.unAmiId);
+//   emit('mon-event-premium-update');
 }
 </script>

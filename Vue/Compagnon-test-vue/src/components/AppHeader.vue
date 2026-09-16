@@ -78,6 +78,7 @@
                 <li><router-link to="/exListRendering" class="btn btn-ghost justify-start">Rendu de listes</router-link></li>
                 <li><router-link to="/exLifecycle" class="btn btn-ghost justify-start">Cycle de vie</router-link></li>
                 <li><router-link to="/exProps" class="btn btn-ghost justify-start">Props</router-link></li>
+                <li><router-link to="/exEmit" class="btn btn-ghost justify-start">Emit</router-link></li>
               </ul>
             </details>
           </li>
@@ -155,6 +156,7 @@
               <li><router-link to="/exListRendering">Rendu de listes</router-link></li>
               <li><router-link to="/exLifecycle">Cycle de vie</router-link></li>
               <li><router-link to="/exProps">Props</router-link></li>
+              <li><router-link to="/exEmit">Emit</router-link></li>
             </ul>
           </details>
         </li>

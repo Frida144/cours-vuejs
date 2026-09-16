@@ -9,6 +9,8 @@
         <!-- ✅ BONNE SYNTAXE dans le parent : -->
         <OneFriend v-for="ami in lesAmis" :key="ami.id" :friend="ami" />
     </div>
+
+    
 </template>
 
 <script setup lang="ts">
