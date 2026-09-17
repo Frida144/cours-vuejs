@@ -7,7 +7,13 @@
             :unAmiPhone="ami.phone" :unAmiMail="ami.email" :unAmiPremium="ami.premium"></OneFriend> -->
 
         <!-- ✅ BONNE SYNTAXE dans le parent : -->
-        <OneFriend v-for="ami in lesAmis" :key="ami.id" :friend="ami" />
+        <OneFriend
+            :unAmiId="ami.id"
+            :unAmiName="ami.name"
+            :unAmiPhone="ami.phone"
+            :unAmiMail="ami.email"
+            :unAmiPremium="ami.premium"
+        />
     </div>
 
     

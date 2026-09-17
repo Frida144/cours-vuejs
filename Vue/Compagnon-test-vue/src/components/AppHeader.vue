@@ -63,6 +63,7 @@
                 <li><router-link to="/dataBinding" class="btn btn-ghost justify-start">Liaison de données</router-link></li>
                 <li><router-link to="/reactivite" class="btn btn-ghost justify-start">Réactivité</router-link></li>
                 <li><router-link to="/productCatalog" class="btn btn-ghost justify-start">Catalogue de produits</router-link></li>
+                <li><router-link to="/taskManager" class="btn btn-ghost justify-start">Gestionnaire de tâches</router-link></li>
               </ul>
             </details>
           </li>
@@ -81,6 +82,7 @@
                 <li><router-link to="/exEmit" class="btn btn-ghost justify-start">Emit</router-link></li>
                 <li><router-link to="/firebaseArticlesManager" class="btn btn-ghost justify-start">Articles Manager (Firebase)</router-link></li>
                 <li><router-link to="/projetYesevent" class="btn btn-ghost justify-start">Projet YesEvent</router-link></li>
+                <li><router-link to="/exPiniaCounter" class="btn btn-ghost justify-start">Compteur Pinia</router-link></li>
               </ul>
             </details>
           </li>
@@ -142,6 +144,8 @@
               <li><router-link to="/dataBinding">Liaison de données</router-link></li>
               <li><router-link to="/reactivite">Réactivité</router-link></li>
               <li><router-link to="/productCatalog">Catalogue de produits</router-link></li>
+              <li><router-link to="/taskManager">Gestionnaire de tâches</router-link></li>
+
             </ul>
           </details>
         </li>
@@ -160,7 +164,8 @@
               <li><router-link to="/exProps">Props</router-link></li>
               <li><router-link to="/exEmit">Emit</router-link></li>
               <li><router-link to="/firebaseArticlesManager">Articles Manager (Firebase)</router-link></li>
-                <li><router-link to="/projetYesevent" class="btn btn-ghost justify-start">Projet YesEvent</router-link></li>
+              <li><router-link to="/projetYesevent" class="btn btn-ghost justify-start">Projet YesEvent</router-link></li>
+              <li><router-link to="/exPiniaCounter" class="btn btn-ghost justify-start">Compteur Pinia</router-link></li>
 
             </ul>
           </details>

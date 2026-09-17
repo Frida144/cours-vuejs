@@ -64,7 +64,7 @@ function handleLike(eventpremiereData:any, eventdeuxiemeData:any): void {
     isLiked.value = true;
 }
 
-function handleUnlike(event): void {
+function handleUnlike(event: unknown): void {
     console.log(event);
     console.log("On arrive a réagir quand ya un Dislike");
     isLiked.value = false;

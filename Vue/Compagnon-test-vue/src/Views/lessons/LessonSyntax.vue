@@ -51,7 +51,7 @@
   
   &lt;template&gt;
     &lt;div&gt;
-      &lt;p&gt;{{ message }}&lt;/p&gt;
+      &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;
       &lt;button @click="direBonjour"&gt;Cliquez-moi&lt;/button&gt;
     &lt;/div&gt;
   &lt;/template&gt;
@@ -83,7 +83,7 @@
   
   &lt;template&gt;
     &lt;div&gt;
-      &lt;p&gt;{{ message }}&lt;/p&gt;
+      &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;
       &lt;button @click="direBonjour"&gt;Cliquez-moi&lt;/button&gt;
     &lt;/div&gt;
   &lt;/template&gt;

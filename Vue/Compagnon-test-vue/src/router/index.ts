@@ -158,6 +158,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../Views/exercices/ProjetYesevent.vue'),
     },
     {
+        path: '/exPiniaCounter',
+        component: () => import('../Views/exercices/ExPinaCounterStore.vue'),
+    },
+    {
+        path: '/taskManager',
+        component: () => import('../Views/tp/TaskManager.vue'),
+    },
+    {
         path: '/:pathMatch(.*)*',
         component: () => import('../Views/tp/NotFound.vue'),
     },
