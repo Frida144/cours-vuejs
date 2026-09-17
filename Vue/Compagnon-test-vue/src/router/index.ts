@@ -6,6 +6,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/',
         alias: '/home',
+        name: 'home',
         component: () => import('../Views/tp/Home.vue'),
     },
     {
@@ -109,6 +110,10 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../Views/auth/ProfileDetailView.vue'),
     },
     {
+        path: '/login',
+        component: () => import('../Views/auth/Login.vue'),
+    },
+    {
         path: '/productCatalog',
         component: () => import('../Views/tp/ProductCatalog.vue'),
     },
@@ -139,6 +144,18 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/exEmit',
         component: () => import('../Views/exercices/ExEmit.vue'),
+    },
+    {
+        path: '/firebaseArticlesManager',
+        component: () => import('../Views/exercices/FirebaseArticlesManager.vue'),
+    },
+    {
+        path: '/login',
+        component: () => import('../Views/auth/Login.vue'),
+    },
+     {
+        path: '/projetYesevent',
+        component: () => import('../Views/exercices/ProjetYesevent.vue'),
     },
     {
         path: '/:pathMatch(.*)*',

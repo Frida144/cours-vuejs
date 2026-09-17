@@ -1,2 +1,5 @@
+allowBuilds:
+  '@firebase/util': true
+  protobufjs: true
 minimumReleaseAgeExclude:
   - daisyui@5.7.32

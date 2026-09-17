@@ -79,6 +79,8 @@
                 <li><router-link to="/exLifecycle" class="btn btn-ghost justify-start">Cycle de vie</router-link></li>
                 <li><router-link to="/exProps" class="btn btn-ghost justify-start">Props</router-link></li>
                 <li><router-link to="/exEmit" class="btn btn-ghost justify-start">Emit</router-link></li>
+                <li><router-link to="/firebaseArticlesManager" class="btn btn-ghost justify-start">Articles Manager (Firebase)</router-link></li>
+                <li><router-link to="/projetYesevent" class="btn btn-ghost justify-start">Projet YesEvent</router-link></li>
               </ul>
             </details>
           </li>
@@ -157,6 +159,9 @@
               <li><router-link to="/exLifecycle">Cycle de vie</router-link></li>
               <li><router-link to="/exProps">Props</router-link></li>
               <li><router-link to="/exEmit">Emit</router-link></li>
+              <li><router-link to="/firebaseArticlesManager">Articles Manager (Firebase)</router-link></li>
+                <li><router-link to="/projetYesevent" class="btn btn-ghost justify-start">Projet YesEvent</router-link></li>
+
             </ul>
           </details>
         </li>
